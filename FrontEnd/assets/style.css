@@ -160,7 +160,7 @@ h1 > span {
 }
 
 h2 {
-  font-family: "Syne";
+  font-family: "Work Sans";
   font-weight: 700;
   font-size: 30px;
   color: #1d6154;
@@ -198,6 +198,11 @@ nav ul {
 nav li {
   padding: 0 10px;
   font-size: 1.2em;
+  font-weight: 400;
+}
+nav a {
+  text-decoration: none;
+  color: #000000;
 }
 
 li:hover {
@@ -287,4 +292,11 @@ footer nav ul {
   display: flex;
   justify-content: flex-end;
   margin: 2em;
+}
+
+footer {
+  font-family: "Work Sans";
+  font-weight: 300;
+  font-style: Light;
+  font-size: 14px;
 }
