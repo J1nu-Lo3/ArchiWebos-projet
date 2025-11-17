@@ -16,3 +16,12 @@ fetch("http://localhost:5678/api/works")
       document.querySelector(".gallery").appendChild(figure);
     });
   });
+
+const buttons = document.querySelectorAll(".categories-buttons button");
+
+buttons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    buttons.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+  });
+});
