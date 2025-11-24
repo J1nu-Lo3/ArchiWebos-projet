@@ -44,9 +44,9 @@ function filterGallery(categoryId) {
     const figCat = Number(fig.dataset.category);
 
     if (categoryId === "all" || figCat === categoryId) {
-      fig.style.display = ""; // visible
+      fig.style.display = "";
     } else {
-      fig.style.display = "none"; // masqué
+      fig.style.display = "none";
     }
   });
 }

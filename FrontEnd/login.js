@@ -1,3 +1,78 @@
-const form = document.getElementById("login-form");
+// Sélection des éléments
+let form = document.querySelector(".log_form");
+let emailInput = document.getElementById("email");
+let passwordInput = document.getElementById("password");
 
-fetch("http://localhost:5678/api/users/login");
+function validerEmail(email) {
+  let emailRegExp = new RegExp("[a-z0-9._-]+@[a-z0-9._-]+\\.[a-z0-9._-]+");
+
+  if (!emailRegExp.test(email)) {
+    throw new Error("L'email n'est pas valide.");
+  }
+}
+
+function validerPassword(password) {
+  if (password.length < 1) {
+    throw new Error("Le mot de passe ne peut pas être vide.");
+  }
+}
+
+function afficherMessageErreur(message) {
+  let spanErreur = document.getElementById("erreurMessage");
+
+  if (!spanErreur) {
+    spanErreur = document.createElement("span");
+    spanErreur.id = "erreurMessage";
+    spanErreur.style.color = "red";
+    spanErreur.style.display = "block";
+    spanErreur.style.marginTop = "10px";
+
+    form.appendChild(spanErreur);
+  }
+
+  spanErreur.innerText = message;
+}
+
+// Fonction pour envoyer la requête API login
+function loginUser(email, password) {
+  return fetch("http://localhost:5678/api/users/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email: email, password: password }),
+  }).then(function (res) {
+    if (!res.ok) {
+      throw new Error("Identifiants incorrects.");
+    }
+    return res.json();
+  });
+}
+
+// Gestion du formulaire
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  let email = emailInput.value.trim();
+  let password = passwordInput.value.trim();
+
+  try {
+    validerEmail(email);
+    validerPassword(password);
+
+    //  Tentative de connexion
+    loginUser(email, password)
+      .then(function (data) {
+        sessionStorage.setItem("token", data.token);
+        sessionStorage.setItem("userId", data.userId);
+
+        // Redirection vers la page d’éditeur
+        window.location.href = "ieditor.html";
+      })
+      .catch(function (error) {
+        afficherMessageErreur(error.message);
+      });
+  } catch (validationError) {
+    afficherMessageErreur(validationError.message);
+  }
+});
