@@ -1,7 +1,7 @@
 // Sélection des éléments
-let form = document.querySelector(".log_form");
-let emailInput = document.getElementById("email");
-let passwordInput = document.getElementById("password");
+const form = document.querySelector(".log_form");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
 
 function validerEmail(email) {
   let emailRegExp = new RegExp("[a-z0-9._-]+@[a-z0-9._-]+\\.[a-z0-9._-]+");

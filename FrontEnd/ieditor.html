@@ -91,6 +91,7 @@
     </footer>
 
     <!-- editor: galerie photos -->
+    <!-- supprimer photo-->
     <div id="editor-overlay" class="editor-overlay hidden"></div>
 
     <div id="editor" class="editor hidden">
@@ -103,6 +104,39 @@
         <hr />
 
         <button id="add-photo-btn">Ajouter une photo</button>
+      </div>
+    </div>
+
+    <!-- ajouter photo-->
+    <div id="editor-add" class="editor hidden">
+      <div class="editor-add-content">
+        <span id="editor-back" class="editor-back">←</span>
+
+        <span class="editor-close">&times;</span>
+
+        <h3>Ajout photo</h3>
+
+        <div class="upload-zone">
+          <img class="upload-preview hidden" alt="" />
+          <div class="upload-placeholder">
+            <i class="fa-regular fa-image"></i>
+            <button id="upload-btn" class="upload-btn">+ Ajouter photo</button>
+            <p>jpg, png : 4mo max</p>
+          </div>
+          <input
+            type="file"
+            id="photo-input"
+            accept="image/png, image/jpeg"
+            hidden
+          />
+        </div>
+
+        <form id="add-photo-form">
+          <label for="title">Titre</label>
+          <input type="text" id="title" />
+
+          <label for="category">Catégorie</label>
+        </form>
       </div>
     </div>
 

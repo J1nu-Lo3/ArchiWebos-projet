@@ -30,11 +30,11 @@ function displayWorks(works) {
   }
 }
 // Editor
-let editor = document.getElementById("editor");
-let editorOverlay = document.getElementById("editor-overlay");
-let editorClose = document.querySelector(".editor-close");
-let editBtn = document.querySelector(".edit-btn");
-let editorGallery = document.querySelector(".editor-gallery");
+const editor = document.getElementById("editor");
+const editorOverlay = document.getElementById("editor-overlay");
+const editorClose = document.querySelector(".editor-close");
+const editBtn = document.querySelector(".edit-btn");
+const editorGallery = document.querySelector(".editor-gallery");
 
 // Ouvrir l'editor
 editBtn.addEventListener("click", function () {
@@ -81,34 +81,34 @@ function fillEditorGallery() {
   }
 }
 
-// ----------------------
-// SUPPRESSION API
-// ----------------------
-async function deleteWork(id, htmlElement) {
+// Supprimer
+function deleteWork(id, htmlElement) {
   if (!token) {
     alert("Vous devez être connecté pour supprimer une image.");
     return;
   }
 
-  const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+  fetch(`http://localhost:5678/api/works/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  });
+  })
+    .then((response) => {
+      if (!response.ok) {
+        console.error("Erreur suppression :", response.status);
+        return;
+      }
 
-  if (response.ok) {
-    // Supprimer dans la modale
-    htmlElement.remove();
+      htmlElement.remove();
 
-    // Mettre à jour le tableau global
-    allWorks = allWorks.filter((work) => work.id !== id);
+      allWorks = allWorks.filter((work) => work.id !== id);
 
-    // Mettre à jour la galerie principale
-    displayWorks(allWorks);
-  } else {
-    console.error("Erreur suppression :", response.status);
-  }
+      displayWorks(allWorks);
+    })
+    .catch((err) => {
+      console.error("Erreur réseau :", err);
+    });
 }
 
 // Lancement du script
