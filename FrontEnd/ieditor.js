@@ -1,6 +1,7 @@
 const gallery = document.querySelector(".gallery");
-
 let allWorks = [];
+
+const token = localStorage.getItem("token");
 
 // fonction fecth pour la gallerie
 function fetchWorks() {
@@ -11,6 +12,7 @@ function fetchWorks() {
 
 // fonction pour afficher les photos de la gallerie
 function displayWorks(works) {
+  gallery.innerHTML = "";
   for (let work of works) {
     const figure = document.createElement("figure");
     figure.dataset.category = work.categoryId;
@@ -55,9 +57,57 @@ function fillEditorGallery() {
   editorGallery.innerHTML = "";
 
   for (let work of allWorks) {
+    let item = document.createElement("div");
+    item.classList.add("editor-item");
+    item.dataset.id = work.id;
+
+    // Image
     let img = document.createElement("img");
     img.src = work.imageUrl;
-    editorGallery.appendChild(img);
+
+    // Bouton poubelle
+    let deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+
+    // Action supprimer
+    deleteBtn.addEventListener("click", function () {
+      deleteWork(work.id, item);
+    });
+
+    item.appendChild(img);
+    item.appendChild(deleteBtn);
+    editorGallery.appendChild(item);
+  }
+}
+
+// ----------------------
+// SUPPRESSION API
+// ----------------------
+async function deleteWork(id, htmlElement) {
+  if (!token) {
+    alert("Vous devez être connecté pour supprimer une image.");
+    return;
+  }
+
+  const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (response.ok) {
+    // Supprimer dans la modale
+    htmlElement.remove();
+
+    // Mettre à jour le tableau global
+    allWorks = allWorks.filter((work) => work.id !== id);
+
+    // Mettre à jour la galerie principale
+    displayWorks(allWorks);
+  } else {
+    console.error("Erreur suppression :", response.status);
   }
 }
 
@@ -66,3 +116,17 @@ fetchWorks().then((works) => {
   allWorks = works;
   displayWorks(works);
 });
+
+//logout
+const logoutBtn = document.getElementById("logout");
+
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+
+    window.location.href = "login.html";
+  });
+}

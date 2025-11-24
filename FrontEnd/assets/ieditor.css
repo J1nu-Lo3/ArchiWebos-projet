@@ -401,3 +401,28 @@ footer {
   font-size: 14px;
   margin: 0 auto;
 }
+
+.editor-item {
+  position: relative;
+}
+
+.editor-item img {
+  width: 100%;
+  display: block;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: black;
+  color: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+}

@@ -63,8 +63,8 @@ form.addEventListener("submit", function (e) {
     //  Tentative de connexion
     loginUser(email, password)
       .then(function (data) {
-        sessionStorage.setItem("token", data.token);
-        sessionStorage.setItem("userId", data.userId);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.userId);
 
         // Redirection vers la page d’éditeur
         window.location.href = "ieditor.html";
