@@ -391,7 +391,7 @@ footer {
   margin: 50px auto;
 }
 
-/* ajouter */
+/* ajouter btn */
 #add-photo-btn {
   background: #1d6154;
   color: white;
@@ -426,3 +426,5 @@ footer {
   border-radius: 3px;
   cursor: pointer;
 }
+
+/* Editor add */

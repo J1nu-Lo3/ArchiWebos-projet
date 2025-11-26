@@ -111,10 +111,50 @@ function deleteWork(id, htmlElement) {
     });
 }
 
+// Ajout photo
+const editorAdd = document.getElementById("editor-add");
+const addPhotoBtn = document.getElementById("add-photo-btn");
+const editorAddClose = document.querySelector("#editor-add .editor-close");
+const editorBack = document.getElementById("editor-back");
+
+// Ouvrir popup ajout photo
+addPhotoBtn.addEventListener("click", function () {
+  editor.classList.add("hidden");
+  editorAdd.classList.remove("hidden");
+});
+
+editorBack.addEventListener("click", function () {
+  editorAdd.classList.add("hidden");
+  editor.classList.remove("hidden");
+});
+
 // Lancement du script
 fetchWorks().then((works) => {
   allWorks = works;
   displayWorks(works);
+});
+
+editorAddClose.addEventListener("click", function () {
+  editorAdd.classList.add("hidden");
+  editorOverlay.classList.add("hidden");
+});
+
+const uploadBtn = document.getElementById("upload-btn");
+const photoInput = document.getElementById("photo-input");
+const uploadPreview = document.querySelector(".upload-preview");
+const uploadPlaceholder = document.querySelector(".upload-placeholder");
+
+// Ouvrir input fichier
+uploadBtn.addEventListener("click", () => photoInput.click());
+
+// Afficher l'aperçu
+photoInput.addEventListener("change", function () {
+  const file = this.files[0];
+  if (!file) return;
+
+  uploadPreview.src = URL.createObjectURL(file);
+  uploadPreview.classList.remove("hidden");
+  uploadPlaceholder.classList.add("hidden");
 });
 
 //logout

@@ -133,9 +133,14 @@
 
         <form id="add-photo-form">
           <label for="title">Titre</label>
-          <input type="text" id="title" />
+          <input name="title" type="text" id="title" />
 
           <label for="category">Catégorie</label>
+          <select name="category" id="category-select">
+            <option value=""></option>
+            <option value="M">Objets</option>
+            <option value="L">Appartements</option>
+          </select>
         </form>
       </div>
     </div>
