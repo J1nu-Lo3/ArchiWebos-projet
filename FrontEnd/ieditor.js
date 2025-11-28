@@ -118,22 +118,21 @@ const editorBack = document.getElementById("editor-back");
 
 // ouvrir mondale ajout photo
 addPhotoBtn.addEventListener("click", function () {
+  loadCategories();
   editor.classList.add("hidden");
   editorAdd.classList.remove("hidden");
+
+  editorOverlay.classList.remove("hidden");
 });
 
 editorBack.addEventListener("click", function () {
+  resetAddPhotoModal();
   editorAdd.classList.add("hidden");
   editor.classList.remove("hidden");
 });
 
-// lancement du script
-fetchWorks().then((works) => {
-  allWorks = works;
-  displayWorks(works);
-});
-
 editorAddClose.addEventListener("click", function () {
+  resetAddPhotoModal();
   editorAdd.classList.add("hidden");
   editorOverlay.classList.add("hidden");
 });
@@ -154,6 +153,101 @@ photoInput.addEventListener("change", function () {
   uploadPreview.src = URL.createObjectURL(file);
   uploadPreview.classList.remove("hidden");
   uploadPlaceholder.classList.add("hidden");
+  checkFormValidity();
+});
+
+// ajout
+const titleInput = document.getElementById("title");
+const categorySelect = document.getElementById("category-select");
+const validateBtn = document.getElementById("validate-photo");
+const addPhotoForm = document.getElementById("add-photo-form");
+
+// charger les catégories
+function loadCategories() {
+  fetch("http://localhost:5678/api/categories")
+    .then((res) => res.json())
+    .then((categories) => {
+      categorySelect.innerHTML = `
+        <option value="" disabled selected></option>
+      `;
+
+      categories.forEach((cat) => {
+        const option = document.createElement("option");
+        option.value = cat.id;
+        option.textContent = cat.name;
+        categorySelect.appendChild(option);
+      });
+    })
+    .catch((err) => console.error("Erreur chargement catégories :", err));
+}
+
+// reset complet de la modale
+function resetAddPhotoModal() {
+  addPhotoForm.reset();
+
+  categorySelect.value = "";
+
+  uploadPreview.classList.add("hidden");
+  uploadPreview.src = "";
+  uploadPlaceholder.classList.remove("hidden");
+
+  validateBtn.classList.add("disabled");
+  validateBtn.classList.remove("enabled");
+  validateBtn.style.cursor = "not-allowed";
+}
+
+function checkFormValidity() {
+  const formIsValid = photoInput.files.length > 0;
+  titleInput.value.trim() !== "" && categorySelect.value !== "";
+
+  validateBtn.classList.toggle("enabled", formIsValid);
+  validateBtn.classList.toggle("disabled", !formIsValid);
+  validateBtn.style.cursor = formIsValid ? "pointer" : "not-allowed";
+}
+
+titleInput.addEventListener("input", checkFormValidity);
+categorySelect.addEventListener("change", checkFormValidity);
+
+validateBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  if (validateBtn.classList.contains("disabled")) return;
+
+  uploadNewWork().then((newWork) => {
+    allWorks.push(newWork);
+    displayWorks(allWorks);
+    fillEditorGallery();
+
+    resetAddPhotoModal();
+    editorAdd.classList.add("hidden");
+    editorOverlay.classList.add("hidden");
+  });
+});
+
+function uploadNewWork() {
+  const formData = new FormData();
+  formData.append("image", photoInput.files[0]);
+  formData.append("title", titleInput.value);
+  formData.append("category", categorySelect.value);
+
+  return fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  })
+    .then((res) => res.json())
+    .catch((err) => {
+      console.error("Erreur upload :", err);
+      throw err;
+    });
+}
+
+//lancement du script
+fetchWorks().then((works) => {
+  allWorks = works;
+  displayWorks(works);
 });
 
 //logout

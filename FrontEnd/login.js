@@ -1,4 +1,4 @@
-// Sélection des éléments
+// sélection des éléments
 const form = document.querySelector(".log_form");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
@@ -33,7 +33,7 @@ function afficherMessageErreur(message) {
   spanErreur.innerText = message;
 }
 
-// Fonction pour envoyer la requête API login
+// fonction pour envoyer la requête API login
 function loginUser(email, password) {
   return fetch("http://localhost:5678/api/users/login", {
     method: "POST",
@@ -49,7 +49,7 @@ function loginUser(email, password) {
   });
 }
 
-// Gestion du formulaire
+// gestion du formulaire
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -60,13 +60,13 @@ form.addEventListener("submit", function (e) {
     validerEmail(email);
     validerPassword(password);
 
-    //  Tentative de connexion
+    //  tentative de connexion
     loginUser(email, password)
       .then(function (data) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.userId);
 
-        // Redirection vers la page d’éditeur
+        // redirection vers la page d’éditeur
         window.location.href = "ieditor.html";
       })
       .catch(function (error) {

@@ -87,7 +87,7 @@ function setActiveButton(activeBtn) {
   activeBtn.classList.add("active");
 }
 
-// Lancement du script
+// lancement du script
 fetchWorks().then((works) => {
   allWorks = works;
   displayWorks(works);

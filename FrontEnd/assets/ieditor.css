@@ -300,7 +300,7 @@ li:hover {
 input[type="submit"] {
   font-family: "Syne";
   font-weight: 700;
-  color: white;
+  color: #ffffff;
   background-color: #1d6154;
   margin: 2em auto;
   width: 180px;
@@ -327,6 +327,10 @@ footer {
   inset: 0;
   background: #0000004d;
   z-index: 10;
+}
+
+.editor-overlay.hidden {
+  display: none;
 }
 
 .hidden {
@@ -430,8 +434,6 @@ footer {
 /* mondale ajouter photo*/
 #editor-add {
   position: fixed;
-  top: 0;
-  left: 0;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -444,10 +446,6 @@ footer {
 
 #editor-add:not(.hidden) {
   display: flex;
-}
-
-.hidden {
-  display: none;
 }
 
 /* contenu */
@@ -535,7 +533,13 @@ footer {
 .upload-preview {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 10px;
+  background: #e8f1f6;
+}
+
+.upload-preview:not(.hidden) + .upload-placeholder {
+  display: none;
 }
 
 /* form */
