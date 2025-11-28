@@ -108,11 +108,11 @@
     </div>
 
     <!-- ajouter photo-->
-    <div id="editor-add" class="editor hidden">
+    <div id="editor-add" class="editor-add hidden">
       <div class="editor-add-content">
         <span id="editor-back" class="editor-back">←</span>
 
-        <span class="editor-close">&times;</span>
+        <span class="editor-add-close">&times;</span>
 
         <h3>Ajout photo</h3>
 
@@ -136,11 +136,20 @@
           <input name="title" type="text" id="title" />
 
           <label for="category">Catégorie</label>
-          <select name="category" id="category-select">
-            <option value=""></option>
-            <option value="M">Objets</option>
-            <option value="L">Appartements</option>
-          </select>
+          <div class="custom-select-wrapper">
+            <select name="category" id="category-select">
+              <option value=""></option>
+              <option value="M">Objets</option>
+              <option value="L">Appartements</option>
+            </select>
+            <span class="picker">⌵</span>
+          </div>
+
+          <hr />
+
+          <button id="validate-photo" class="validate-btn disabled">
+            Valider
+          </button>
         </form>
       </div>
     </div>

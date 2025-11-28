@@ -333,7 +333,7 @@ footer {
   display: none;
 }
 
-/* popup editor */
+/* mondale editor supprimer photo */
 .editor {
   position: fixed;
   font-family: "Work Sans";
@@ -427,4 +427,190 @@ footer {
   cursor: pointer;
 }
 
-/* Editor add */
+/* mondale ajouter photo*/
+#editor-add {
+  position: fixed;
+  top: 0;
+  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 200;
+}
+
+#editor-add:not(.hidden) {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
+/* contenu */
+.editor-add-content {
+  position: relative;
+  width: 630px;
+  background: #fff;
+  padding: 50px 40px 45px;
+  border-radius: 10px;
+  font-family: "Work Sans";
+  text-align: center;
+}
+
+.editor-add-content h3 {
+  margin-top: 20px;
+  font-size: 26px;
+  margin-bottom: 30px;
+}
+
+.editor-back {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.editor-add-close {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* upload zone */
+.upload-zone {
+  width: 420px;
+  height: 169px;
+  background: #e8f1f6;
+  border-radius: 4px;
+  margin: 0 auto 30px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-zone i {
+  font-size: 76px;
+  color: #b9c5cc;
+  margin-bottom: 0;
+}
+
+.upload-btn {
+  background: #cbd6dc;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 14px;
+  font-size: 14px;
+  color: #306685;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.upload-placeholder p {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #6a6a6a;
+}
+
+.upload-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* form */
+#add-photo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 420px;
+  text-align: left;
+  margin: 0 auto;
+}
+
+#add-photo-form label {
+  font-family: "Work Sans";
+  font-size: 14px;
+  color: #3d3d3d;
+  display: block;
+}
+
+#add-photo-form input,
+#add-photo-form select {
+  width: 420px;
+  height: 51px;
+  background: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 0;
+  box-shadow: 0px 4px 14px 0px #00000017;
+  font-size: 14px;
+  align-self: center;
+
+  appearance: none;
+}
+
+.custom-select-wrapper {
+  position: relative;
+  width: 420px;
+}
+
+.custom-select-wrapper .picker {
+  position: absolute;
+  right: 15px;
+  top: 45%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 20px;
+  color: #6c6c6c;
+}
+
+.editor-add-content hr {
+  border: none;
+  border-top: 1px solid #b3b3b3;
+  width: 420px;
+  margin: 35px auto 20px;
+}
+
+/* btn valider */
+.validate-btn {
+  width: 180px;
+  margin: 0 auto;
+  margin-top: 10px;
+
+  background: #a7a7a7;
+  color: white;
+
+  padding: 12px 20px;
+  border-radius: 30px;
+  border: none;
+
+  cursor: not-allowed;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.validate-btn.enabled {
+  background: #1d6154;
+}

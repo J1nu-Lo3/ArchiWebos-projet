@@ -29,21 +29,21 @@ function displayWorks(works) {
     gallery.appendChild(figure);
   }
 }
-// Editor
+// editor > supprimer photo
 const editor = document.getElementById("editor");
 const editorOverlay = document.getElementById("editor-overlay");
 const editorClose = document.querySelector(".editor-close");
 const editBtn = document.querySelector(".edit-btn");
 const editorGallery = document.querySelector(".editor-gallery");
 
-// Ouvrir l'editor
+// ouvrir l'editor
 editBtn.addEventListener("click", function () {
   editor.classList.remove("hidden");
   editorOverlay.classList.remove("hidden");
   fillEditorGallery();
 });
 
-// Fermer l'editor
+// fermer l'editor
 editorClose.addEventListener("click", closeEditor);
 editorOverlay.addEventListener("click", closeEditor);
 
@@ -52,7 +52,7 @@ function closeEditor() {
   editorOverlay.classList.add("hidden");
 }
 
-// Afficher les images dans l'editor
+// afficher les images dans l'editor
 function fillEditorGallery() {
   editorGallery.innerHTML = "";
 
@@ -61,16 +61,15 @@ function fillEditorGallery() {
     item.classList.add("editor-item");
     item.dataset.id = work.id;
 
-    // Image
     let img = document.createElement("img");
     img.src = work.imageUrl;
 
-    // Bouton poubelle
+    // btn poubelle
     let deleteBtn = document.createElement("button");
     deleteBtn.classList.add("delete-btn");
     deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
 
-    // Action supprimer
+    // supprimer
     deleteBtn.addEventListener("click", function () {
       deleteWork(work.id, item);
     });
@@ -81,7 +80,7 @@ function fillEditorGallery() {
   }
 }
 
-// Supprimer
+// function supprimer alert
 function deleteWork(id, htmlElement) {
   if (!token) {
     alert("Vous devez être connecté pour supprimer une image.");
@@ -111,13 +110,13 @@ function deleteWork(id, htmlElement) {
     });
 }
 
-// Ajout photo
+// editor > ajout photo
 const editorAdd = document.getElementById("editor-add");
 const addPhotoBtn = document.getElementById("add-photo-btn");
-const editorAddClose = document.querySelector("#editor-add .editor-close");
+const editorAddClose = document.querySelector("#editor-add .editor-add-close");
 const editorBack = document.getElementById("editor-back");
 
-// Ouvrir popup ajout photo
+// ouvrir mondale ajout photo
 addPhotoBtn.addEventListener("click", function () {
   editor.classList.add("hidden");
   editorAdd.classList.remove("hidden");
@@ -128,7 +127,7 @@ editorBack.addEventListener("click", function () {
   editor.classList.remove("hidden");
 });
 
-// Lancement du script
+// lancement du script
 fetchWorks().then((works) => {
   allWorks = works;
   displayWorks(works);
@@ -144,10 +143,10 @@ const photoInput = document.getElementById("photo-input");
 const uploadPreview = document.querySelector(".upload-preview");
 const uploadPlaceholder = document.querySelector(".upload-placeholder");
 
-// Ouvrir input fichier
+// ouvrir input fichier
 uploadBtn.addEventListener("click", () => photoInput.click());
 
-// Afficher l'aperçu
+// afficher l'aperçu
 photoInput.addEventListener("change", function () {
   const file = this.files[0];
   if (!file) return;
@@ -167,6 +166,6 @@ if (logoutBtn) {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
 
-    window.location.href = "login.html";
+    window.location.href = "index.html";
   });
 }
