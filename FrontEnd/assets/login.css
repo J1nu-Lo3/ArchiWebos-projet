@@ -181,7 +181,6 @@ li:hover {
 nav .log_active {
   font-weight: 600;
   font-family: "Work Sans";
-  font-style: SemiBold;
 }
 
 .log_section {
@@ -250,15 +249,12 @@ nav .log_active {
 
 footer {
   font-family: "Work Sans";
-  width: 1440;
-  height: 60;
   padding-top: 964px;
   text-align: right;
   padding: 40px 60px;
   font-size: 14px;
   font-weight: 300;
   color: #000000;
-  font-style: Light;
 }
 
 footer nav ul {

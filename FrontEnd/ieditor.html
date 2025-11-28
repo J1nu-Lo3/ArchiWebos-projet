@@ -117,7 +117,11 @@
         <h3>Ajout photo</h3>
 
         <div class="upload-zone">
-          <img class="upload-preview hidden" alt="" />
+          <img
+            class="upload-preview hidden"
+            src="assets/icons/image.png"
+            alt=""
+          />
           <div class="upload-placeholder">
             <i class="fa-regular fa-image"></i>
             <button id="upload-btn" class="upload-btn">+ Ajouter photo</button>
@@ -136,10 +140,10 @@
           <label for="title">Titre</label>
           <input name="title" type="text" id="title" />
 
-          <label for="category">Catégorie</label>
+          <label for="category-select">Catégorie</label>
           <div class="custom-select-wrapper">
             <select name="category" id="category-select">
-              <option value=""></option>
+              <option value="">-- sélectionner une catégorie --</option>
             </select>
             <span class="picker">⌵</span>
           </div>
