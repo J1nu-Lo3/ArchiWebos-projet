@@ -7,20 +7,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
       rel="stylesheet"
     />
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/style.css" />
+    <link rel="stylesheet" href="./assets/ieditor.css" />
   </head>
   <body>
+    <div class="edition-bar">
+      <p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>
+    </div>
     <header>
       <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
         <ul>
           <li><a href="#pro_ancre">projets</a></li>
           <li><a href="#cont_ancre">contact</a></li>
-          <li><a href="login.html">login</a></li>
+          <li><a href="login.html" id="login">login</a></li>
+          <li><a href="#" id="logout">logout</a></li>
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
       </nav>
@@ -50,8 +59,13 @@
         </article>
       </section>
       <section id="portfolio">
-        <h2 id="pro_ancre">Mes Projets</h2>
-        <div class="categories-buttons"></div>
+        <div class="portfolio-header">
+          <h2 id="pro_ancre">Mes Projets</h2>
+          <button class="edit-btn">
+            <i class="fa-regular fa-pen-to-square"></i> modifier
+          </button>
+        </div>
+        <div class="categories-buttons" id="categories-buttons"></div>
         <div class="gallery"></div>
       </section>
       <section id="contact">
@@ -76,6 +90,75 @@
         </ul>
       </nav>
     </footer>
-    <script src="script.js" defer></script>
+
+    <!-- editor: galerie photos -->
+    <!-- supprimer photo-->
+    <div id="editor-overlay" class="editor-overlay hidden"></div>
+
+    <div id="editor" class="editor hidden">
+      <div class="editor-content">
+        <span class="editor-close">&times;</span>
+        <h3>Galerie photo</h3>
+
+        <div class="editor-gallery"></div>
+
+        <hr />
+
+        <button id="add-photo-btn">Ajouter une photo</button>
+      </div>
+    </div>
+
+    <!-- ajouter photo-->
+    <div id="editor-add" class="editor-add hidden">
+      <div class="editor-add-content">
+        <span id="editor-back" class="editor-back">←</span>
+
+        <span class="editor-add-close">&times;</span>
+
+        <h3>Ajout photo</h3>
+
+        <div class="upload-zone">
+          <img
+            class="upload-preview hidden"
+            src="assets/icons/image.png"
+            alt=""
+          />
+          <div class="upload-placeholder">
+            <i class="fa-regular fa-image"></i>
+            <button id="upload-btn" class="upload-btn">+ Ajouter photo</button>
+            <p>jpg, png : 4mo max</p>
+          </div>
+          <input
+            type="file"
+            id="photo-input"
+            name="image"
+            accept="image/png, image/jpeg"
+            hidden
+          />
+        </div>
+
+        <form id="add-photo-form">
+          <label for="title">Titre</label>
+          <input name="title" type="text" id="title" />
+
+          <label for="category-select">Catégorie</label>
+          <div class="custom-select-wrapper">
+            <select name="category" id="category-select">
+              <option value="">-- sélectionner une catégorie --</option>
+            </select>
+            <span class="picker">⌵</span>
+          </div>
+
+          <hr />
+
+          <button id="validate-photo" class="validate-btn disabled">
+            Valider
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="ieditor.js"></script>
   </body>
 </html>

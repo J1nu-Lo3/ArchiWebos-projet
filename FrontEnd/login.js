@@ -67,7 +67,7 @@ form.addEventListener("submit", function (e) {
         localStorage.setItem("userId", data.userId);
 
         // redirection vers la page d’éditeur
-        window.location.href = "ieditor.html";
+        window.location.href = "index.html";
       })
       .catch(function (error) {
         afficherMessageErreur(error.message);

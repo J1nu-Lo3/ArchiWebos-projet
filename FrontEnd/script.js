@@ -1,31 +1,66 @@
+// DOM
 const gallery = document.querySelector(".gallery");
+window.gallery = gallery; // ça c'est important pour IEDITOR.JS
+
 const filtersContainer = document.querySelector(".categories-buttons");
 
-let allWorks = [];
+window.allWorks = [];
 
-// fonction fecth pour la gallerie
+// fetch works
 function fetchWorks() {
   return fetch("http://localhost:5678/api/works")
     .then((res) => res.json())
     .catch((err) => console.error("Erreur :", err));
 }
 
-// fonction button
+// fetch categories
 function fetchCategories() {
   return fetch("http://localhost:5678/api/categories")
     .then((res) => res.json())
     .catch((error) => console.error("Erreur fetch categories :", error));
 }
 
-// fonction pour afficher les photos de la gallerie
+// UI co/déco
+function initAuthUI() {
+  const token = localStorage.getItem("token");
+
+  const editionBar = document.querySelector(".edition-bar");
+  const editBtn = document.querySelector(".edit-btn");
+  const logout = document.getElementById("logout");
+  const login = document.getElementById("login");
+
+  if (!editionBar || !editBtn || !logout || !login) return;
+
+  if (token) {
+    // mode connecté
+    editionBar.style.display = "flex";
+    editBtn.style.display = "flex";
+    logout.style.display = "block";
+    login.style.display = "none";
+
+    filtersContainer.style.display = "none";
+  } else {
+    // mode visiteur
+    editionBar.style.display = "none";
+    editBtn.style.display = "none";
+    logout.style.display = "none";
+    login.style.display = "block";
+
+    filtersContainer.style.display = "flex";
+  }
+}
+
+// display gallery
 function displayWorks(works) {
-  for (let work of works) {
+  gallery.innerHTML = "";
+
+  works.forEach((work) => {
     const figure = document.createElement("figure");
     figure.dataset.category = work.categoryId;
+
     const img = document.createElement("img");
     img.src = work.imageUrl;
     img.alt = work.title;
-    img.loading = "lazy";
 
     const caption = document.createElement("figcaption");
     caption.textContent = work.title;
@@ -33,28 +68,14 @@ function displayWorks(works) {
     figure.appendChild(img);
     figure.appendChild(caption);
     gallery.appendChild(figure);
-  }
-}
-
-// filtre sans avoir a détruire le DOM
-function filterGallery(categoryId) {
-  const figures = gallery.querySelectorAll("figure");
-
-  figures.forEach((fig) => {
-    const figCat = Number(fig.dataset.category);
-
-    if (categoryId === "all" || figCat === categoryId) {
-      fig.style.display = "";
-    } else {
-      fig.style.display = "none";
-    }
   });
 }
 
-// boultons categories dynamique
+// btn categories dynamique
 function createFilterButtons(categories) {
-  const btnAll = document.createElement("button");
+  filtersContainer.innerHTML = "";
 
+  const btnAll = document.createElement("button");
   btnAll.textContent = "Tous";
   btnAll.classList.add("active");
 
@@ -65,7 +86,7 @@ function createFilterButtons(categories) {
 
   filtersContainer.appendChild(btnAll);
 
-  for (let category of categories) {
+  categories.forEach((category) => {
     const btn = document.createElement("button");
     btn.textContent = category.name;
 
@@ -75,10 +96,9 @@ function createFilterButtons(categories) {
     });
 
     filtersContainer.appendChild(btn);
-  }
+  });
 }
 
-// button active
 function setActiveButton(activeBtn) {
   document
     .querySelectorAll(".categories-buttons button")
@@ -87,12 +107,23 @@ function setActiveButton(activeBtn) {
   activeBtn.classList.add("active");
 }
 
-// lancement du script
-fetchWorks().then((works) => {
-  allWorks = works;
-  displayWorks(works);
-});
+// button active
+function filterGallery(categoryId) {
+  document.querySelectorAll(".gallery figure").forEach((fig) => {
+    const figCat = Number(fig.dataset.category);
 
-fetchCategories().then((categories) => {
+    fig.style.display =
+      categoryId === "all" || figCat === categoryId ? "" : "none";
+  });
+}
+
+// lancement
+Promise.all([fetchWorks(), fetchCategories()]).then(([works, categories]) => {
+  allWorks = works;
+  displayWorks(allWorks);
   createFilterButtons(categories);
+  initAuthUI();
+
+  // important pour ieditor.js
+  window.dispatchEvent(new Event("worksReady"));
 });
