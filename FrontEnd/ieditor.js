@@ -163,6 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function resetAddPhotoModal() {
     addPhotoForm.reset();
 
+    photoInput.value = "";
+
     categorySelect.value = "";
 
     uploadPreview.classList.add("hidden");
